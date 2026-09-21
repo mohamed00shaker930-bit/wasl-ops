@@ -1,0 +1,14 @@
+{
+  "name": "wasl-ops-tools",
+  "private": true,
+  "type": "module",
+  "description": "Local PostgreSQL 17 (no root, no docker) for schema reconstruction and staging",
+  "scripts": {
+    "pg:start": "node pg.mjs start",
+    "pg:stop": "node pg.mjs stop",
+    "pg:reset": "node pg.mjs reset"
+  },
+  "dependencies": {
+    "embedded-postgres": "17.9.0-beta.17"
+  }
+}

@@ -1,0 +1,3818 @@
+{
+  "generatedAt": "2026-09-08T00:24:26.739Z",
+  "source": {
+    "typesFile": "/home/mohammed/wasl/baqala-connect-yemen/src/integrations/supabase/types.ts",
+    "migrations": [
+      "20260618004104_a881e681-32f1-472c-b8c9-00e637d0297d.sql",
+      "20260618004128_4e652883-2ec1-4f31-9ede-793c03ddbdd0.sql",
+      "20260623212300_1e04a95d-e8fb-464b-b21b-1c9b0dff85de.sql",
+      "20260623221404_e0f32cf1-3bc7-4aa5-813d-9c91621454ff.sql",
+      "20260623224657_dc910628-f5fa-42fa-8b50-0f230c78575f.sql",
+      "20260623224712_f765ea35-1401-4868-b50a-c34b6c14c42d.sql",
+      "20260624204518_2dc54015-67e8-4a1b-acc0-72db543f0622.sql",
+      "20260624213114_94e4b132-2d9f-4ec3-91ca-c843cc21ddbd.sql",
+      "20260624213748_0a154cec-669b-4bb3-b424-6e138449a542.sql",
+      "20260627192942_2fc6baa0-c44e-4c6f-8265-0aae28f4248b.sql",
+      "20260627193755_147a354c-4eb6-434a-b492-3557b3239507.sql",
+      "20260627195816_8097206a-f4e6-433b-819c-834b39f593ad.sql",
+      "20260627201747_67612782-f67c-464c-82ee-247dcdda65f7.sql",
+      "20260705214815_7f9ea425-f892-4a0d-a444-ea5c195da0d7.sql",
+      "20260801224226_aee66000-bb33-4a71-bd11-07e47dcdfe8f.sql",
+      "20260801224331_c50bd975-4605-402d-bdf5-758a067f2ecd.sql"
+    ]
+  },
+  "enums": {
+    "app_role": [
+      "customer",
+      "merchant",
+      "super_admin",
+      "admin",
+      "operations",
+      "support",
+      "finance"
+    ],
+    "credit_status": [
+      "pending",
+      "approved",
+      "declined"
+    ],
+    "credit_tx_status": [
+      "pending",
+      "approved",
+      "rejected"
+    ],
+    "credit_tx_type": [
+      "charge",
+      "payment"
+    ],
+    "custom_request_status": [
+      "pending",
+      "quoted",
+      "accepted",
+      "rejected",
+      "converted"
+    ],
+    "order_channel": [
+      "online",
+      "in_store"
+    ],
+    "order_status": [
+      "sent",
+      "accepted",
+      "preparing",
+      "out_for_delivery",
+      "delivered",
+      "declined",
+      "cancelled"
+    ],
+    "payment_method": [
+      "cash",
+      "credit",
+      "jeeb",
+      "jawali",
+      "hasab",
+      "onecash"
+    ],
+    "return_status": [
+      "none",
+      "requested",
+      "approved",
+      "rejected"
+    ],
+    "store_status": [
+      "pending",
+      "active",
+      "suspended",
+      "rejected"
+    ],
+    "wallet_tx_status": [
+      "pending",
+      "approved",
+      "rejected"
+    ],
+    "wallet_tx_type": [
+      "topup",
+      "payment",
+      "refund",
+      "adjustment"
+    ]
+  },
+  "tables": [
+    {
+      "name": "admin_permissions",
+      "columns": [
+        {
+          "name": "granted_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "granted_by",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "permission",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "admin_permissions_permission_fkey",
+          "columns": [
+            "permission"
+          ],
+          "references": "permission_defs",
+          "referencedColumns": [
+            "perm"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "admin_permissions_user_id_fkey",
+          "columns": [
+            "user_id"
+          ],
+          "references": "profiles",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "granted_at",
+        "granted_by",
+        "permission",
+        "user_id"
+      ]
+    },
+    {
+      "name": "app_admins",
+      "columns": [
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "app_settings",
+      "columns": [
+        {
+          "name": "key",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "updated_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "value",
+          "tsType": "Json",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "app_usage_log",
+      "columns": [
+        {
+          "name": "close_type",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "closed_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "last_ping_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "opened_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "seq",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "user_agent",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "close_type",
+        "closed_at",
+        "id",
+        "last_ping_at",
+        "opened_at",
+        "seq",
+        "user_agent",
+        "user_id"
+      ]
+    },
+    {
+      "name": "audit_logs",
+      "columns": [
+        {
+          "name": "action",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "changed_fields",
+          "tsType": "string[]",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "new_data",
+          "tsType": "Json",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "old_data",
+          "tsType": "Json",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "record_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "record_label",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "seq",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "table_name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "user_name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "user_role",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "action",
+        "changed_fields",
+        "created_at",
+        "id",
+        "new_data",
+        "old_data",
+        "record_id",
+        "record_label",
+        "seq",
+        "table_name",
+        "user_id",
+        "user_name",
+        "user_role"
+      ]
+    },
+    {
+      "name": "auth_sessions_log",
+      "columns": [
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "ip",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "last_seen_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "login_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "logout_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "logout_type",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "seq",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "session_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "user_agent",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "id",
+        "ip",
+        "last_seen_at",
+        "login_at",
+        "logout_at",
+        "logout_type",
+        "seq",
+        "session_id",
+        "user_agent",
+        "user_id"
+      ]
+    },
+    {
+      "name": "banners",
+      "columns": [
+        {
+          "name": "bg_color",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "image_url",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "is_active",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "link",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "sort_order",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "subtitle",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "title",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "banners_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "business_categories",
+      "columns": [
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "is_active",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "name_ar",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "slug",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "sort_order",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "created_at",
+        "id",
+        "is_active",
+        "name_ar",
+        "slug",
+        "sort_order"
+      ]
+    },
+    {
+      "name": "catalog_categories",
+      "columns": [
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "icon",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "image_url",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "main_section",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "parent_category",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "sort_order",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "usage_count",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": [
+        "image_url",
+        "main_section",
+        "parent_category",
+        "sort_order"
+      ]
+    },
+    {
+      "name": "catalog_items",
+      "columns": [
+        {
+          "name": "barcode",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "category_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "category_name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "category_path",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "default_price",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "description",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "image_url",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "main_section",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "sort_order",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "source",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "subcategory",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "usage_count",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [
+        {
+          "name": "catalog_items_category_id_fkey",
+          "columns": [
+            "category_id"
+          ],
+          "references": "catalog_categories",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": [
+        "category_id",
+        "category_path",
+        "description",
+        "main_section",
+        "sort_order",
+        "subcategory"
+      ]
+    },
+    {
+      "name": "categories",
+      "columns": [
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "sort_order",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "categories_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "credit_accounts",
+      "columns": [
+        {
+          "name": "balance",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "customer_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "credit_accounts_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "credit_transactions",
+      "columns": [
+        {
+          "name": "account_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "amount",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "note",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "order_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "status",
+          "tsType": "Database[\"public\"][\"Enums\"][\"credit_tx_status\"]",
+          "enum": "credit_tx_status",
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "type",
+          "tsType": "Database[\"public\"][\"Enums\"][\"credit_tx_type\"]",
+          "enum": "credit_tx_type",
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "credit_transactions_account_id_fkey",
+          "columns": [
+            "account_id"
+          ],
+          "references": "credit_accounts",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "credit_transactions_order_id_fkey",
+          "columns": [
+            "order_id"
+          ],
+          "references": "orders",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "custom_product_requests",
+      "columns": [
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "customer_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "description",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "image_url",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "merchant_note",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "merchant_price",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "order_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "qty",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "status",
+          "tsType": "Database[\"public\"][\"Enums\"][\"custom_request_status\"]",
+          "enum": "custom_request_status",
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "updated_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [
+        {
+          "name": "custom_product_requests_order_id_fkey",
+          "columns": [
+            "order_id"
+          ],
+          "references": "orders",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "custom_product_requests_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "customer_ratings",
+      "columns": [
+        {
+          "name": "comment",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "customer_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "order_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "stars",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "customer_ratings_order_id_fkey",
+          "columns": [
+            "order_id"
+          ],
+          "references": "orders",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "customer_ratings_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "favorites",
+      "columns": [
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "target_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "target_type",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "locations",
+      "columns": [
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "label",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "landmark_text",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "lat",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "lng",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "phone",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "monitoring_settings",
+      "columns": [
+        {
+          "name": "fail_threshold",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "monitor_secret",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "telegram_bot_token",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "telegram_chat_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "updated_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "fail_threshold",
+        "id",
+        "monitor_secret",
+        "telegram_bot_token",
+        "telegram_chat_id",
+        "updated_at"
+      ]
+    },
+    {
+      "name": "notifications",
+      "columns": [
+        {
+          "name": "body",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "link",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "read_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "title",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "type",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "order_items",
+      "columns": [
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "note",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "order_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "price",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "product_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "qty",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "order_items_order_id_fkey",
+          "columns": [
+            "order_id"
+          ],
+          "references": "orders",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "order_items_product_id_fkey",
+          "columns": [
+            "product_id"
+          ],
+          "references": "products",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "orders",
+      "columns": [
+        {
+          "name": "channel",
+          "tsType": "Database[\"public\"][\"Enums\"][\"order_channel\"]",
+          "enum": "order_channel",
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "commission_amount",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "commission_pct",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "credit_status",
+          "tsType": "Database[\"public\"][\"Enums\"][\"credit_status\"]",
+          "enum": "credit_status",
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "customer_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "location_label",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "location_landmark",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "location_lat",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "location_lng",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "location_phone",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "note",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "payment_method",
+          "tsType": "Database[\"public\"][\"Enums\"][\"payment_method\"]",
+          "enum": "payment_method",
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "return_reason",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "return_requested_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "return_responded_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "return_status",
+          "tsType": "Database[\"public\"][\"Enums\"][\"return_status\"]",
+          "enum": "return_status",
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "status",
+          "tsType": "Database[\"public\"][\"Enums\"][\"order_status\"]",
+          "enum": "order_status",
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "total",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "updated_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [
+        {
+          "name": "orders_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": [
+        "return_reason",
+        "return_requested_at",
+        "return_responded_at"
+      ]
+    },
+    {
+      "name": "password_reset_requests",
+      "columns": [
+        {
+          "name": "applicant_name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "decided_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "decided_by",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "phone",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "reason",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "requested_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "status",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "user_type",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "applicant_name",
+        "decided_at",
+        "decided_by",
+        "id",
+        "phone",
+        "reason",
+        "requested_at",
+        "status",
+        "user_id",
+        "user_type"
+      ]
+    },
+    {
+      "name": "pending_customers",
+      "columns": [
+        {
+          "name": "claimed_by_user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "created_by",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "phone",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "pending_customers_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "permission_bundle_items",
+      "columns": [
+        {
+          "name": "bundle",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "permission",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "permission_bundle_items_bundle_fkey",
+          "columns": [
+            "bundle"
+          ],
+          "references": "permission_bundles",
+          "referencedColumns": [
+            "bundle"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "permission_bundle_items_permission_fkey",
+          "columns": [
+            "permission"
+          ],
+          "references": "permission_defs",
+          "referencedColumns": [
+            "perm"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "bundle",
+        "permission"
+      ]
+    },
+    {
+      "name": "permission_bundles",
+      "columns": [
+        {
+          "name": "bundle",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "label",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "sort",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "bundle",
+        "label",
+        "sort"
+      ]
+    },
+    {
+      "name": "permission_defs",
+      "columns": [
+        {
+          "name": "grp",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "grp_label",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "label",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "perm",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "sort",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "super_only",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "grp",
+        "grp_label",
+        "label",
+        "perm",
+        "sort",
+        "super_only"
+      ]
+    },
+    {
+      "name": "product_offers",
+      "columns": [
+        {
+          "name": "active",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "discount_price",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "ends_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "max_qty",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "product_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "sold_qty",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "starts_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "product_offers_product_id_fkey",
+          "columns": [
+            "product_id"
+          ],
+          "references": "products",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "product_offers_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "products",
+      "columns": [
+        {
+          "name": "barcode",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "category_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "image_url",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "in_stock",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "lib_category",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "main_section",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "price",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "subcategory",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        }
+      ],
+      "fks": [
+        {
+          "name": "products_category_id_fkey",
+          "columns": [
+            "category_id"
+          ],
+          "references": "categories",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "products_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": [
+        "lib_category",
+        "main_section",
+        "subcategory"
+      ]
+    },
+    {
+      "name": "profiles",
+      "columns": [
+        {
+          "name": "account_status",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "address",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "approved_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "approved_by",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "business_category_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "business_name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "city",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "district",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "phone",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "status_reason",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "suspended_until",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "user_type",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        }
+      ],
+      "fks": [
+        {
+          "name": "profiles_business_category_id_fkey",
+          "columns": [
+            "business_category_id"
+          ],
+          "references": "business_categories",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": [
+        "account_status",
+        "address",
+        "approved_at",
+        "approved_by",
+        "business_category_id",
+        "business_name",
+        "city",
+        "district",
+        "status_reason",
+        "suspended_until",
+        "user_type"
+      ]
+    },
+    {
+      "name": "ratings",
+      "columns": [
+        {
+          "name": "comment",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "customer_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "order_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "stars",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "store_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "ratings_order_id_fkey",
+          "columns": [
+            "order_id"
+          ],
+          "references": "orders",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "ratings_store_id_fkey",
+          "columns": [
+            "store_id"
+          ],
+          "references": "stores",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "stores",
+      "columns": [
+        {
+          "name": "area",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "business_category_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "commission_pct",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "delivery_info",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "image_url",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "is_open",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "lat",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "lng",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "owner_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "phone",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "rating",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "rating_count",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "status",
+          "tsType": "Database[\"public\"][\"Enums\"][\"store_status\"]",
+          "enum": "store_status",
+          "nullable": false,
+          "hasDefault": true
+        }
+      ],
+      "fks": [
+        {
+          "name": "stores_business_category_id_fkey",
+          "columns": [
+            "business_category_id"
+          ],
+          "references": "business_categories",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": [
+        "business_category_id"
+      ]
+    },
+    {
+      "name": "uptime_checks",
+      "columns": [
+        {
+          "name": "checked_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "error",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "http_status",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "is_up",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "response_time_ms",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "target_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "uptime_checks_target_id_fkey",
+          "columns": [
+            "target_id"
+          ],
+          "references": "uptime_targets",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "checked_at",
+        "error",
+        "http_status",
+        "id",
+        "is_up",
+        "response_time_ms",
+        "target_id"
+      ]
+    },
+    {
+      "name": "uptime_incidents",
+      "columns": [
+        {
+          "name": "alert_sent",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "downtime_minutes",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "last_error",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "recovery_alert_sent",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "resolved_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "started_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "target_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "uptime_incidents_target_id_fkey",
+          "columns": [
+            "target_id"
+          ],
+          "references": "uptime_targets",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "alert_sent",
+        "downtime_minutes",
+        "id",
+        "last_error",
+        "recovery_alert_sent",
+        "resolved_at",
+        "started_at",
+        "target_id"
+      ]
+    },
+    {
+      "name": "uptime_pending",
+      "columns": [
+        {
+          "name": "issued_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "request_id",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "target_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "uptime_pending_target_id_fkey",
+          "columns": [
+            "target_id"
+          ],
+          "references": "uptime_targets",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "issued_at",
+        "request_id",
+        "target_id"
+      ]
+    },
+    {
+      "name": "uptime_targets",
+      "columns": [
+        {
+          "name": "consecutive_failures",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "expected_statuses",
+          "tsType": "number[]",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "is_active",
+          "tsType": "boolean",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "last_checked_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "last_response_ms",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "last_status",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "method",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "sort_order",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "timeout_ms",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "url",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": false,
+      "columnsMissingFromMigrations": [
+        "consecutive_failures",
+        "created_at",
+        "expected_statuses",
+        "id",
+        "is_active",
+        "last_checked_at",
+        "last_response_ms",
+        "last_status",
+        "method",
+        "name",
+        "sort_order",
+        "timeout_ms",
+        "url"
+      ]
+    },
+    {
+      "name": "user_roles",
+      "columns": [
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "role",
+          "tsType": "Database[\"public\"][\"Enums\"][\"app_role\"]",
+          "enum": "app_role",
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "wallet_transactions",
+      "columns": [
+        {
+          "name": "amount",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "method",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "note",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "order_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "reference",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "status",
+          "tsType": "Database[\"public\"][\"Enums\"][\"wallet_tx_status\"]",
+          "enum": "wallet_tx_status",
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "type",
+          "tsType": "Database[\"public\"][\"Enums\"][\"wallet_tx_type\"]",
+          "enum": "wallet_tx_type",
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "wallet_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [
+        {
+          "name": "wallet_transactions_order_id_fkey",
+          "columns": [
+            "order_id"
+          ],
+          "references": "orders",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        },
+        {
+          "name": "wallet_transactions_wallet_id_fkey",
+          "columns": [
+            "wallet_id"
+          ],
+          "references": "wallets",
+          "referencedColumns": [
+            "id"
+          ],
+          "oneToOne": false
+        }
+      ],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    },
+    {
+      "name": "wallets",
+      "columns": [
+        {
+          "name": "balance",
+          "tsType": "number",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "created_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "user_id",
+          "tsType": "string",
+          "enum": null,
+          "nullable": false,
+          "hasDefault": false
+        }
+      ],
+      "fks": [],
+      "inMigrations": true,
+      "columnsMissingFromMigrations": []
+    }
+  ],
+  "views": [
+    {
+      "name": "uptime_status",
+      "columns": [
+        {
+          "name": "consecutive_failures",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "last_checked_at",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "last_response_ms",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "last_status",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "name",
+          "tsType": "string",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "uptime_24h_pct",
+          "tsType": "number",
+          "enum": null,
+          "nullable": true,
+          "hasDefault": true
+        }
+      ],
+      "fks": [],
+      "inMigrations": false
+    }
+  ],
+  "functions": [
+    {
+      "name": "admin_apply_bundle",
+      "args": {
+        "p_bundle": "string",
+        "p_uid": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_broadcast_notification",
+      "args": {
+        "_body": "string",
+        "_link": "string",
+        "_segment": "string",
+        "_title": "string"
+      },
+      "returns": "number",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "admin_bulk_update_catalog_items",
+      "args": {
+        "p_items": "Json"
+      },
+      "returns": "Json",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_create_bundle",
+      "args": {
+        "p_bundle": "string",
+        "p_label": "string",
+        "p_perms?": "string[]"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_decide_account_request",
+      "args": {
+        "p_approve": "boolean",
+        "p_reason?": "string",
+        "p_user_id": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_decide_password_reset",
+      "args": {
+        "p_approve": "boolean",
+        "p_request_id": "string",
+        "p_temp_password?": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_delete_bundle",
+      "args": {
+        "p_bundle": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_get_permission_catalog",
+      "args": "never",
+      "returns": "Json",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_get_user_detail",
+      "args": {
+        "p_uid": "string"
+      },
+      "returns": "Json",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_grant_admin",
+      "args": {
+        "_uid": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "admin_grant_permission",
+      "args": {
+        "p_grant": "boolean",
+        "p_perm": "string",
+        "p_uid": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_grant_wallet_credit",
+      "args": {
+        "p_amount": "number",
+        "p_note?": "string",
+        "p_uid": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_kpis",
+      "args": {
+        "p_from": "string",
+        "p_grain?": "string",
+        "p_to": "string"
+      },
+      "returns": "Json",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_list_admin_permissions",
+      "args": {
+        "p_uid": "string"
+      },
+      "returns": "string[]",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_list_app_usage",
+      "args": {
+        "p_limit?": "number",
+        "p_offset?": "number",
+        "p_status?": "string",
+        "p_user_id?": "string"
+      },
+      "returns": {
+        "close_type": "string",
+        "closed_at": "string",
+        "duration_seconds": "number",
+        "id": "string",
+        "is_open": "boolean",
+        "last_ping_at": "string",
+        "opened_at": "string",
+        "total_count": "number",
+        "user_agent": "string",
+        "user_id": "string",
+        "user_name": "string",
+        "user_phone": "string"
+      },
+      "returnsSet": true,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_list_audit_logs",
+      "args": {
+        "p_action?": "string",
+        "p_from?": "string",
+        "p_limit?": "number",
+        "p_offset?": "number",
+        "p_role_group?": "string",
+        "p_search?": "string",
+        "p_table?": "string",
+        "p_to?": "string",
+        "p_user_id?": "string"
+      },
+      "returns": {
+        "action": "string",
+        "changed_fields": "string[]",
+        "created_at": "string",
+        "id": "string",
+        "new_data": "Json",
+        "old_data": "Json",
+        "record_id": "string",
+        "record_label": "string",
+        "seq": "number",
+        "table_name": "string",
+        "total_count": "number",
+        "user_id": "string",
+        "user_name": "string",
+        "user_phone": "string",
+        "user_role": "string"
+      },
+      "returnsSet": true,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_list_login_sessions",
+      "args": {
+        "p_limit?": "number",
+        "p_offset?": "number",
+        "p_status?": "string",
+        "p_user_id?": "string"
+      },
+      "returns": {
+        "id": "string",
+        "ip": "string",
+        "is_active": "boolean",
+        "last_seen_at": "string",
+        "login_at": "string",
+        "logout_at": "string",
+        "logout_type": "string",
+        "total_count": "number",
+        "user_agent": "string",
+        "user_id": "string",
+        "user_name": "string",
+        "user_phone": "string"
+      },
+      "returnsSet": true,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_list_user_files",
+      "args": {
+        "p_limit?": "number",
+        "p_offset?": "number",
+        "p_search?": "string",
+        "p_status?": "string",
+        "p_user_id?": "string"
+      },
+      "returns": {
+        "active_sessions": "number",
+        "is_open_now": "boolean",
+        "last_action_at": "string",
+        "last_activity_at": "string",
+        "last_login_at": "string",
+        "last_opened_at": "string",
+        "registered_at": "string",
+        "total_actions": "number",
+        "total_count": "number",
+        "total_logins": "number",
+        "total_opens": "number",
+        "user_id": "string",
+        "user_name": "string",
+        "user_phone": "string",
+        "user_role": "string"
+      },
+      "returnsSet": true,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_list_users",
+      "args": {
+        "p_category_slug?": "string",
+        "p_kind?": "string",
+        "p_limit?": "number",
+        "p_offset?": "number",
+        "p_role?": "string",
+        "p_search?": "string"
+      },
+      "returns": {
+        "created_at": "string",
+        "name": "string",
+        "phone": "string",
+        "roles": "string[]",
+        "stores": "Json",
+        "total_count": "number",
+        "user_id": "string",
+        "user_kind": "string"
+      },
+      "returnsSet": true,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_respond_wallet_tx",
+      "args": {
+        "_approve": "boolean",
+        "_tx": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "admin_revoke_admin",
+      "args": {
+        "_uid": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "admin_send_notification",
+      "args": {
+        "p_body": "string",
+        "p_link?": "string",
+        "p_title": "string",
+        "p_type?": "string",
+        "p_uid": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_set_account_status",
+      "args": {
+        "p_reason?": "string",
+        "p_status": "string",
+        "p_uid": "string",
+        "p_until?": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_set_setting",
+      "args": {
+        "_key": "string",
+        "_value": "Json"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "admin_set_store_commission",
+      "args": {
+        "_pct": "number",
+        "_store": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "admin_set_store_status",
+      "args": {
+        "_status": "string",
+        "_store": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "admin_set_user_role",
+      "args": {
+        "_grant": "boolean",
+        "_role": "Database[\"public\"][\"Enums\"][\"app_role\"]",
+        "_uid": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_update_bundle",
+      "args": {
+        "p_bundle": "string",
+        "p_perms": "string[]"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "admin_update_profile",
+      "args": {
+        "p_address?": "string",
+        "p_business_name?": "string",
+        "p_city?": "string",
+        "p_district?": "string",
+        "p_name?": "string",
+        "p_uid": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "app_session_close",
+      "args": {
+        "p_id": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "app_session_open",
+      "args": {
+        "p_user_agent?": "string"
+      },
+      "returns": "string",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "app_session_ping",
+      "args": {
+        "p_id": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "assign_my_role",
+      "args": {
+        "_role": "Database[\"public\"][\"Enums\"][\"app_role\"]"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "catalog_category_counts",
+      "args": "never",
+      "returns": {
+        "category_id": "string",
+        "items_count": "number"
+      },
+      "returnsSet": true,
+      "inMigrations": true
+    },
+    {
+      "name": "clear_my_force_password_change",
+      "args": "never",
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "customer_request_return",
+      "args": {
+        "_order_id": "string",
+        "_reason": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "customer_respond_credit",
+      "args": {
+        "_approve": "boolean",
+        "_tx_id": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "delete_my_account",
+      "args": "never",
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "ensure_wallet",
+      "args": "never",
+      "returns": "string",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "get_credit_customer",
+      "args": {
+        "_account_id": "string"
+      },
+      "returns": {
+        "name": "string",
+        "phone": "string"
+      },
+      "returnsSet": true,
+      "inMigrations": true
+    },
+    {
+      "name": "get_order_customer",
+      "args": {
+        "_order_id": "string"
+      },
+      "returns": {
+        "name": "string",
+        "phone": "string"
+      },
+      "returnsSet": true,
+      "inMigrations": true
+    },
+    {
+      "name": "has_permission",
+      "args": {
+        "_perm": "string",
+        "_uid": "string"
+      },
+      "returns": "boolean",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "has_role",
+      "args": {
+        "_role": "Database[\"public\"][\"Enums\"][\"app_role\"]",
+        "_user_id": "string"
+      },
+      "returns": "boolean",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "is_account_active",
+      "args": {
+        "_uid?": "string"
+      },
+      "returns": "boolean",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "is_admin",
+      "args": {
+        "_uid?": "string"
+      },
+      "returns": "boolean",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "is_staff",
+      "args": {
+        "_uid?": "string"
+      },
+      "returns": "boolean",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "merchant_cancel_credit_tx",
+      "args": {
+        "_tx_id": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "my_permissions",
+      "args": "never",
+      "returns": "Json",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "pay_order_with_wallet",
+      "args": {
+        "_order_id": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "push_notification",
+      "args": {
+        "_body": "string",
+        "_link": "string",
+        "_title": "string",
+        "_type": "string",
+        "_user_id": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": true
+    },
+    {
+      "name": "request_password_reset",
+      "args": {
+        "p_phone": "string",
+        "p_reason?": "string"
+      },
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "search_customers_by_name",
+      "args": {
+        "_q": "string"
+      },
+      "returns": {
+        "id": "string",
+        "name": "string",
+        "phone": "string"
+      },
+      "returnsSet": true,
+      "inMigrations": true
+    },
+    {
+      "name": "uptime_collect_results",
+      "args": "never",
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "uptime_issue_checks",
+      "args": "never",
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "uptime_run",
+      "args": "never",
+      "returns": "undefined",
+      "returnsSet": false,
+      "inMigrations": false
+    },
+    {
+      "name": "uptime_send_telegram",
+      "args": {
+        "p_text": "string"
+      },
+      "returns": "number",
+      "returnsSet": false,
+      "inMigrations": false
+    }
+  ],
+  "migrationOnly": {
+    "triggers": [
+      "apply_credit_tx_trg",
+      "auto_promote_admin_trg",
+      "calc_order_commission_trg",
+      "claim_pending_customers_trg",
+      "touch_custom_requests",
+      "trg_apply_credit_tx",
+      "trg_apply_wallet_tx",
+      "trg_guard_order_money",
+      "trg_guard_store_protected",
+      "trg_notify_order_status",
+      "trg_sync_category_to_catalog",
+      "trg_sync_product_to_catalog",
+      "trg_update_store_rating"
+    ],
+    "functionsNotInTypes": [
+      "apply_credit_tx",
+      "apply_wallet_tx",
+      "auto_promote_admin",
+      "calc_order_commission",
+      "claim_pending_customers",
+      "guard_order_money_fields",
+      "guard_profile_protected_fields",
+      "guard_store_protected_fields",
+      "notify_order_status",
+      "recalc_order_total",
+      "sync_category_to_catalog",
+      "sync_product_to_catalog",
+      "touch_updated_at",
+      "update_store_rating"
+    ]
+  }
+}

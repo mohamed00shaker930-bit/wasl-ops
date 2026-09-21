@@ -1,0 +1,11 @@
+# Never commit real dumps, credentials or downloaded bucket files
+dump/*.dump
+dump/*.csv
+dump/*.sql
+dump/files/
+.env
+tools/node_modules/
+.pgdata/
+.pglog
+tools/pgclient/*.deb
+tools/pgclient/root/

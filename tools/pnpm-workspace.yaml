@@ -1,0 +1,5 @@
+allowBuilds:
+  '@embedded-postgres/linux-x64': set this to true or false
+onlyBuiltDependencies:
+  - '@embedded-postgres/linux-x64'
+  - embedded-postgres
